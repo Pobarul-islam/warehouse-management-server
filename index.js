@@ -12,14 +12,6 @@ app.use(express.json());
 
 
 
-//  user name and password
-
-//user name :  dbuser1
-// user password: ThEf09pcUa9bjoqG
-
-
-
-
 
 const uri = "mongodb+srv://dbUser4:pyEBkGqkXWCneM2V@cluster0.qd4rj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -40,9 +32,19 @@ const run = async () => {
         // Delete
         app.delete('/service/:id', async (req, res) => {
             const id = req.params.id;
+            console.log(id)
             const query = { _id: ObjectId(id) };
-            const result = await serviceCollection.deleteOne(query);
+            const result = await watchesCollection.deleteOne(query);
             res.send(result);
+        })
+
+
+        // post
+
+        app.post('/watches', (req, res) => {
+            const newUser = req.body;
+            console.log('adding new user', newUser);
+            res.send('user data receved.')
         })
 
     }
