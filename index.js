@@ -22,12 +22,23 @@ const run = async () => {
     try {
         await client.connect();
         const watchesCollection = client.db('stockWatches2').collection("watches");
+
+        // Get Products
+
         app.get('/service', async (req, res) => {
             const query = {}
             const coursor = watchesCollection.find(query);
             const watches = await coursor.toArray();
             res.send(watches);
         });
+
+        // Update Products 
+        app.get('/service/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await watchesCollection.findOne(query);
+            res.send(result);
+        })
 
         // Delete
         app.delete('/service/:id', async (req, res) => {
