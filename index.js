@@ -17,8 +17,7 @@ const uri = "mongodb+srv://dbUser4:pyEBkGqkXWCneM2V@cluster0.qd4rj.mongodb.net/m
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
-
-const run = async () => {
+async function run() {
     try {
         await client.connect();
         const watchesCollection = client.db('stockWatches2').collection("watches");
@@ -26,11 +25,29 @@ const run = async () => {
         // Get Products
 
         app.get('/service', async (req, res) => {
+
             const query = {}
             const coursor = watchesCollection.find(query);
             const watches = await coursor.toArray();
             res.send(watches);
         });
+
+        app.get('/service/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const watches = await watchesCollection.findOne(query);
+            res.send(watches);
+        });
+
+        // app.get('/service/:id', async (req, res) => {
+        //     const id = (req.params.id)
+        //     const query = { _id: ObjectId(req.params.id) }
+        //     const coursor = watchesCollection.findOne(query);
+        //     const watches = await coursor.toArray();
+        //     res.send(watches);
+        // });
+
+
 
         // update product
         app.put('/service/:id', async (req, res) => {
