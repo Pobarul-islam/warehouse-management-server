@@ -32,13 +32,25 @@ const run = async () => {
             res.send(watches);
         });
 
-        // Update Products 
-        app.get('/service/:id', async (req, res) => {
+        // update product
+        app.put('/service/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await watchesCollection.findOne(query);
+            const updatedProduct = req.body;
+            console.log(updatedProduct)
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+
+                    quantity: updatedProduct.quantity
+
+                }
+            };
+            const result = await productCollection.updateOne(filter, updatedDoc, options);
             res.send(result);
+
         })
+
 
         // Delete
         app.delete('/service/:id', async (req, res) => {
@@ -69,6 +81,10 @@ run().catch(console.dir);
 app.get('/', (req, res) => {
     res.send('Assingment-11 Server is Running')
 });
+
+app.get('/hero', (req, res) => {
+    res.send('Heroku connected')
+})
 
 app.listen(port, () => {
     console.log('Assingment-11 Server is Running', port)
