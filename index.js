@@ -81,11 +81,15 @@ async function run() {
 
         // post
 
-        app.post('/watches', (req, res) => {
-            const newUser = req.body;
-            console.log('adding new user', newUser);
+        app.post('/service', async (req, res) => {
+            const newProduct = req.body;
+            const result = await watchesCollection.insertOne(newProduct);
             res.send('user data receved.')
         })
+
+
+
+
 
     }
     finally {
