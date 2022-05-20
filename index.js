@@ -39,13 +39,7 @@ async function run() {
             res.send(watches);
         });
 
-        // app.get('/service/:id', async (req, res) => {
-        //     const id = (req.params.id)
-        //     const query = { _id: ObjectId(req.params.id) }
-        //     const coursor = watchesCollection.findOne(query);
-        //     const watches = await coursor.toArray();
-        //     res.send(watches);
-        // });
+
 
 
 
@@ -58,12 +52,10 @@ async function run() {
             const options = { upsert: true };
             const updatedDoc = {
                 $set: {
-
                     quantity: updatedProduct.quantity
-
                 }
             };
-            const result = await productCollection.updateOne(filter, updatedDoc, options);
+            const result = await watchesCollection.updateOne(filter, updatedDoc, options);
             res.send(result);
 
         })
