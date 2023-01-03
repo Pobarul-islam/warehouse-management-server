@@ -85,7 +85,7 @@ async function run() {
 
     }
     finally {
-        console.log('code does not worked')
+        
     }
 }
 
